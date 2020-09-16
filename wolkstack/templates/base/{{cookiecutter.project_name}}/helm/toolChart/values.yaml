@@ -1,0 +1,7 @@
+external-dns:
+  txtOwnerId: "{{ cookiecutter.route_53_hosted_zone_id }}"
+  serviceAccount:
+    annotations:
+      {
+        eks.amazonaws.com/role-arn: "arn:aws:iam::310098748428:role/external_dns",
+      }

@@ -1,0 +1,43 @@
+version: "3.7"
+services:
+  database:
+    build:
+      context: ./database
+    container_name: database
+    command: postgres
+    environment:
+      - POSTGRES_DB=postgres
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
+    volumes:
+      - database-data:/var/lib/postgresql/data
+    ports:
+      - 5432:5432
+  backend:
+    build:
+      context: ./backend
+    image: backend
+    container_name: backend
+    command: yarn start
+    depends_on:
+      - database
+    ports:
+      - 5000:5000
+    volumes:
+      - ./backend/:/backend
+      - backend-modules:/backend/node_modules
+  frontend:
+    build:
+      context: ./frontend
+    container_name: frontend
+    command: yarn start
+    ports:
+      - 3000:3000
+    volumes:
+      - ./frontend/:/frontend
+      - frontend-modules:/frontend/node_modules
+volumes:
+  database-data:
+    driver: local
+  backend-modules:
+  frontend-modules:

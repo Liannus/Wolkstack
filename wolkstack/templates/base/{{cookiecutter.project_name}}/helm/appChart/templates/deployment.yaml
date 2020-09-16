@@ -1,0 +1,62 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: frontend
+spec:
+  selector:
+    matchLabels:
+      app: frontend
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: frontend
+    spec:
+      containers:
+        - image: "{{ .Values.docker_hub_username}}/wolkstack:frontend"
+          imagePullPolicy: Always
+          name: frontend
+          ports:
+            - containerPort: 3000
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: backend
+spec:
+  selector:
+    matchLabels:
+      app: backend
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: backend
+    spec:
+      containers:
+        - image: "{{ .Values.docker_hub_username}}/wolkstack:backend"
+          imagePullPolicy: Always
+          name: backend
+          ports:
+            - containerPort: 5000
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: database
+spec:
+  selector:
+    matchLabels:
+      app: database
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: database
+    spec:
+      containers:
+        - image: "{{ .Values.docker_hub_username}}/wolkstack:database"
+          imagePullPolicy: Always
+          name: database
+          ports:
+            - containerPort: 5432

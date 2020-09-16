@@ -1,0 +1,10 @@
+{
+  "project_name": "",
+  "email": "",
+  "domain_name": "",
+  "route_53_hosted_zone_id": "",
+  "github_username": "",
+  "github_repository_name": "",
+  "docker_hub_username": "",
+  "_copy_without_render": ["*templates"]
+}
