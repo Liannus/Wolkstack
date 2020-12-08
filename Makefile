@@ -5,5 +5,5 @@ up:
 # Create package distribution and upload to PyPi
 upload:
 	python setup.py sdist bdist_wheel
-	twine upload --repository-url https://upload.pypi.org/legacy/ dist/*
+	twine upload dist/*whl dist/*gz 
 

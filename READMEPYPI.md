@@ -1,15 +1,12 @@
 # Wolkstack
-<img src="Landing.png" width="100%" />
 
 ## Table of Contents
 - [About the Repo](#about-the-repo)
 - [Getting Started](#getting-started)
 - [Code Structure](#code-structure)
-- [Architecture](#architecture)
 - [Tech](#tech)
 - [Contributors](#contributors)
 - [License](#license)
-
 
 ## About the Repo
 This repo shows the development state of the Wolkstack project, a cloud development framework for 
@@ -48,7 +45,7 @@ export TF_VAR_github_token={token}
   
 ### Install
 Wolkstack is available as a simple [PyPi package](https://pypi.org/project/Wolkstack/)
-and can be installed with command `pip install Wolkstack`
+and can be installed with command `pip isntall Wolkstack`
 
 Once installed steps and commands can be followed inside the Wolkstack CLI.
   
@@ -57,10 +54,6 @@ Explained here are the most important points of the code structure, where to fin
 ```
 tbd
 ```
-
-## Architecture
-An full example wolkstack deployment is shown here.
-<img src="Architecture.png" width="100%" />
 
 ## Tech
 Wolkstack sets you up with a standard set of tools that can be switched and replaced as desired, a list of used technology can be seen here.
