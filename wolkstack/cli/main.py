@@ -1,6 +1,7 @@
 import sys
 import os
 import click
+import time
 import json
 from .groups import groups
 from cookiecutter.main import cookiecutter
@@ -44,7 +45,7 @@ def generate_project(project_name, email, domain_name, route_53_hosted_zone_id,
 
 
 @main.command(name='update-containers', help='Manually update containers in case of CICD errors.')
-def update_containers(filename):
+def update_containers():
     directory = searchParentDirectoriesForFile("wolkstack.json")
     if directory:
         try:
@@ -57,9 +58,7 @@ def update_containers(filename):
 
 
 @main.command(name='up', help='Create infrastructure and boot application.')
-@click.option('-d', '--docker-password', prompt=True, hide_input=True)
-@click.option('-g', '--github-token', prompt=True, hide_input=True)
-def deploy_project(dockerPass, githubToken):
+def deploy_project():
     directory = searchParentDirectoriesForFile("wolkstack.json")
     if directory:
         try:
@@ -68,21 +67,19 @@ def deploy_project(dockerPass, githubToken):
         except:
             logging.debug("Corrupt wolkstack.json file")
 
-    os.environ['TF_VAR_github_token'] = githubToken
-    os.environ['TF_VAR_docker_hub_password'] = dockerPass
-
     callCommand(["bash", "deploy.sh"], cwd=directory +
                 "/" + constants.TERRAFORM_PATH)
     handleExternalDNS(directory, (directory + "/" +
                                   constants.HELM_TOOLS_PATH + "/values.yaml"))
     callCommand(["helm", "install", "deploy-tools", "../helm/toolChart"], cwd=directory +
-                "/" + constants.TERRAFORM_PATH)
+                "/" + constants.TERRAFORM_PATH, stdout=True)
+    time.sleep(15)
     callCommand(["helm", "install", "wolkstack-apps", "../helm/appChart"], cwd=directory +
                 "/" + constants.TERRAFORM_PATH)
 
 
 @main.command(name='down', help='Delete infrastructure and tear down application.')
-def teardown_project(filename):
+def teardown_project():
     directory = searchParentDirectoriesForFile("wolkstack.json")
     if directory:
         try:
@@ -97,6 +94,7 @@ def teardown_project(filename):
                 "/" + constants.TERRAFORM_PATH)
     callCommand(["bash", "destroy.sh"], cwd=directory +
                 "/" + constants.TERRAFORM_PATH)
+
 
 # Add groups
 for group in groups:

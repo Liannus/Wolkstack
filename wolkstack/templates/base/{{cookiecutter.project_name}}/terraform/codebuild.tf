@@ -82,8 +82,8 @@ resource "aws_iam_role_policy" "deploy_apps" {
         "ssm:Get*"
       ],
       "Resource": [
-        ${aws_ssm_parameter.docker-hub-username.arn},
-        ${aws_ssm_parameter.docker-hub-password.arn}
+        "${aws_ssm_parameter.docker-hub-username.arn}",
+        "${aws_ssm_parameter.docker-hub-password.arn}"
       ]
     }
   ]
@@ -91,11 +91,8 @@ resource "aws_iam_role_policy" "deploy_apps" {
 POLICY
 }
 
-data "template_file" "buildspec" {
-  template = "${file("buildspec.yml")}"
-  vars = {
-    env = var.env
-  }
+data "local_file" "buildspec" {
+  filename = "./buildspec.yml"
 }
 
 resource "aws_codebuild_project" "deploy_apps" {
@@ -136,7 +133,7 @@ resource "aws_codebuild_project" "deploy_apps" {
   }
 
   source {
-    buildspec       = data.template_file.buildspec.rendered
+    buildspec       = data.local_file.buildspec.content
     git_clone_depth = 0
     insecure_ssl    = false
     type            = "CODEPIPELINE"

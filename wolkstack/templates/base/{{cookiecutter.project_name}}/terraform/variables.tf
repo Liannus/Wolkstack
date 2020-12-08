@@ -42,11 +42,7 @@ variable "docker_hub_password" {
   type        = string
 }
 
-# Configure the GitHub Provider
-provider "github" {
-  token = var.github_token
-  owner = var.repository_owner
+variable "github_token" {
+  description = "github token FILL THROUGH ENV VARIABLES FOR SECURITY"
+  type        = string
 }
-
-
-

@@ -44,22 +44,24 @@ def searchParentDirectoriesForFile(filename):
 def handleExternalDNS(parentDir, outputYaml):
     result = callCommand(["terraform", "output", "external-dns-role-arn"],
                          cwd=parentDir + "/" + constants.TERRAFORM_PATH)
+    logging.debug(f'Command result: ${str(result.stdout, "utf-8")}')
     file = open(outputYaml, 'r')
     data = yaml.safe_load(file)
 
     data["external-dns"]["serviceAccount"]["annotations"][
-        "eks.amazonaws.com/role-arn"] = str(result)
+        "eks.amazonaws.com/role-arn"] = str(result.stdout, "utf-8").strip('\n')
 
     with open(outputYaml, 'w') as yaml_file:
         yaml.dump(data, yaml_file)
 
 
-def callCommand(command, shell=False, cwd=None):
-    logging.info("Running command: {command}")
+def callCommand(command, shell=False, cwd=None, stdout=False):
+    logging.info(f'Running command: {command}')
     if shell:
         commandList = createCommandString(command)
     else:
         commandList = command
-    result = subprocess.run(args=commandList, shell=shell, cwd=cwd)
-    logging.debug("Command result: {result}")
+    result = subprocess.run(args=commandList, shell=shell,
+                            cwd=cwd, stdout=subprocess.PIPE if stdout else None)
+    logging.debug(f'Command result: {result}')
     return result

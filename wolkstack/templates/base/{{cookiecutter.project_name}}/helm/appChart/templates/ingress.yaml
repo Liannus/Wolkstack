@@ -18,15 +18,11 @@ spec:
           - path: /
             pathType: Prefix
             backend:
-              service:
-                name: frontend
-                port:
-                  number: 3000
+              serviceName: frontend
+              servicePort: 3000
 
           - path: /api
             pathType: Prefix
             backend:
-              service:
-                name: backend
-                port:
-                  number: 5000
+              serviceName: backend
+              servicePort: 5000
