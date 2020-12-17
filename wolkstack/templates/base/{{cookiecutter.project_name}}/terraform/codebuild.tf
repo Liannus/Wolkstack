@@ -1,5 +1,6 @@
 resource "aws_s3_bucket" "codebuild" {
  bucket = "deploy-apps-codebuild"
+ force_destroy = true
  acl    = "private"
 }
 

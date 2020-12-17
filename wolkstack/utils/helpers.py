@@ -36,6 +36,7 @@ def searchParentDirectoriesForFile(filename):
             if cur_dir == parent_dir:  # if dir is root dir
                 logging.error(
                     """Can't find a suitable configuration file are you in the right directory?""")
+                quit()
                 break
             else:
                 cur_dir = parent_dir
@@ -43,7 +44,7 @@ def searchParentDirectoriesForFile(filename):
 
 def handleExternalDNS(parentDir, outputYaml):
     result = callCommand(["terraform", "output", "external-dns-role-arn"],
-                         cwd=parentDir + "/" + constants.TERRAFORM_PATH)
+                         cwd=parentDir + "/" + constants.TERRAFORM_PATH, stdout=True)
     logging.debug(f'Command result: ${str(result.stdout, "utf-8")}')
     file = open(outputYaml, 'r')
     data = yaml.safe_load(file)

@@ -1,7 +1,8 @@
 #!/bin/bash
 terraform init
 terraform apply -auto-approve
-
+ 
+rm -rf kubeconfig_wolkstack .kubeconfig
 mv -f kubeconfig_wolkstack* kubeconfig_wolkstack 
 cp -f kubeconfig_wolkstack .kubeconfig
 

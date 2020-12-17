@@ -1,5 +1,6 @@
 resource "aws_s3_bucket" "codepipeline_bucket" {
   bucket = "deploy-apps-codepipeline"
+  force_destroy = true
   acl    = "private"
 }
 

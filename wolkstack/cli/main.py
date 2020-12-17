@@ -24,7 +24,7 @@ root.addHandler(handler)
 
 # Main CLI Group
 @click.group()
-@click.version_option("0.1")
+@click.version_option("1.1.1")
 def main():
     """A framework for blazing fast cloud infrastructure management and deployment."""
     pass
@@ -72,8 +72,8 @@ def deploy_project():
     handleExternalDNS(directory, (directory + "/" +
                                   constants.HELM_TOOLS_PATH + "/values.yaml"))
     callCommand(["helm", "install", "deploy-tools", "../helm/toolChart"], cwd=directory +
-                "/" + constants.TERRAFORM_PATH, stdout=True)
-    time.sleep(15)
+                "/" + constants.TERRAFORM_PATH)
+    time.sleep(30)
     callCommand(["helm", "install", "wolkstack-apps", "../helm/appChart"], cwd=directory +
                 "/" + constants.TERRAFORM_PATH)
 

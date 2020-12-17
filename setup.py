@@ -23,7 +23,7 @@ setup(
     name='Wolkstack',
     description='A Framework for blazing fast cloud infrastructure management and deployment',
     packages=find_packages(),
-    version='1.0.3',
+    version='1.1.1',
     install_requires=install_requires,
     python_requires='>=3.7',
     entry_points='''
